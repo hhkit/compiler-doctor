@@ -5,12 +5,14 @@
   "main": "./out/main/index.js",
   "author": "example.com",
   "homepage": "https://electron-vite.org",
-   "build": {
+  "build": {
     "extraFiles": [
       {
         "from": "resources/${os}",
         "to": "Resources/bin",
-        "filter": ["**/*"]
+        "filter": [
+          "**/*"
+        ]
       }
     ]
   },

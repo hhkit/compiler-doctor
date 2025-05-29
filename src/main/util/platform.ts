@@ -1,6 +1,6 @@
-import { platform } from 'os';
+import { platform } from 'os'
 
-export type OSIdentifier = "linux" | "mac" | "win";
+export type OSIdentifier = 'linux' | 'mac' | 'win'
 
 export function getPlatform(): OSIdentifier {
   switch (platform()) {
@@ -9,13 +9,13 @@ export function getPlatform(): OSIdentifier {
     case 'linux':
     case 'openbsd':
     case 'android':
-      return 'linux';
+      return 'linux'
     case 'darwin':
     case 'sunos':
-      return 'mac';
+      return 'mac'
     case 'win32':
-      return 'win';
+      return 'win'
     default:
-      return "win";
+      return 'win'
   }
 }

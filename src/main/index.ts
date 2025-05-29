@@ -21,7 +21,7 @@ function createWindow(): void {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
-    let model = new R2D2Model();
+    let model = new R2D2Model()
     let res = model.load(`r2d2.trace "test.mlir" (%p0) {
   %0  = r2d2.loc [%p0:1:18] ()
   %1  = r2d2.loc [%p0:2:8]  ()
@@ -40,18 +40,23 @@ function createWindow(): void {
   %12 = r2d2.loc [%p2:3:2] (%8)
   %13 = r2d2.loc [%p2:2:0] (%9)
 }
-        `);
-    res.then((succ) => {
-      if (succ == "success") {
-        model.trace({
-          filename: "snap-pass1.mlir",
-          line: 4,
-          column: 4
-        }, R2D2.TraceDirection.Backward).then(console.log);
-      }
-    }
-    )
-      .catch(console.error);
+`)
+    res
+      .then((succ) => {
+        if (succ == 'success') {
+          model
+            .trace(
+              {
+                filename: 'snap-pass1.mlir',
+                line: 4,
+                column: 4
+              },
+              R2D2.TraceDirection.Backward
+            )
+            .then(console.log)
+        }
+      })
+      .catch(console.error)
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
