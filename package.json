@@ -5,6 +5,15 @@
   "main": "./out/main/index.js",
   "author": "example.com",
   "homepage": "https://electron-vite.org",
+   "build": {
+    "extraFiles": [
+      {
+        "from": "resources/${os}",
+        "to": "Resources/bin",
+        "filter": ["**/*"]
+      }
+    ]
+  },
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint --cache .",
@@ -23,6 +32,7 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^4.0.0",
+    "app-root-dir": "^1.0.2",
     "electron-updater": "^6.3.9",
     "vscode-jsonrpc": "^8.2.1"
   },
