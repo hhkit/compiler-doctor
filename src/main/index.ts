@@ -3,6 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { R2D2Model } from './model/R2D2Model'
+import { R2D2 } from './model/R2D2ServerInterface'
 
 function createWindow(): void {
   // Create the browser window.
@@ -21,26 +22,35 @@ function createWindow(): void {
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
     let model = new R2D2Model();
-    let res = model.load(`mldr.trace "test.mlir" (%p0) {
-  %0  = mldr.loc [%p0:1:18] ()
-  %1  = mldr.loc [%p0:2:8]  ()
-  %2  = mldr.loc [%p0:3:8]  ()
-  %3  = mldr.loc [%p0:4:3]  ()
-  %4  = mldr.loc [%p0:1:1]  ()
-  %5  = mldr.loc [%p0:0:0]  ()
-  %p1 = mldr.pass "snap-pass1.mlir" (%p0)
-  %6  = mldr.loc [%p1:4:4] (%1, %2)
-  %7  = mldr.loc [%p1:5:4] (%3)
-  %8  = mldr.loc [%p1:3:2] (%4)
-  %9  = mldr.loc [%p1:2:0] (%5)
-  %p2 = mldr.pass "snap-pass2.mlir" (%p1)
-  %10 = mldr.loc [%p2:4:4] (%6)
-  %11 = mldr.loc [%p2:5:4] (%7)
-  %12 = mldr.loc [%p2:3:2] (%8)
-  %13 = mldr.loc [%p2:2:0] (%9)
+    let res = model.load(`r2d2.trace "test.mlir" (%p0) {
+  %0  = r2d2.loc [%p0:1:18] ()
+  %1  = r2d2.loc [%p0:2:8]  ()
+  %2  = r2d2.loc [%p0:3:8]  ()
+  %3  = r2d2.loc [%p0:4:3]  ()
+  %4  = r2d2.loc [%p0:1:1]  ()
+  %5  = r2d2.loc [%p0:0:0]  ()
+  %p1 = r2d2.pass "snap-pass1.mlir" (%p0)
+  %6  = r2d2.loc [%p1:4:4] (%1, %2)
+  %7  = r2d2.loc [%p1:5:4] (%3)
+  %8  = r2d2.loc [%p1:3:2] (%4)
+  %9  = r2d2.loc [%p1:2:0] (%5)
+  %p2 = r2d2.pass "snap-pass2.mlir" (%p1)
+  %10 = r2d2.loc [%p2:4:4] (%6)
+  %11 = r2d2.loc [%p2:5:4] (%7)
+  %12 = r2d2.loc [%p2:3:2] (%8)
+  %13 = r2d2.loc [%p2:2:0] (%9)
 }
         `);
-    res.then(console.log)
+    res.then((succ) => {
+      if (succ == "success") {
+        model.trace({
+          filename: "snap-pass1.mlir",
+          line: 4,
+          column: 4
+        }, R2D2.TraceDirection.Backward).then(console.log);
+      }
+    }
+    )
       .catch(console.error);
   })
 

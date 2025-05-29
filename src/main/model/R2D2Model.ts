@@ -5,6 +5,7 @@ import { join as joinPath, dirname } from 'path';
 
 import appRootDir from 'app-root-dir';
 import { env } from "process";
+import { R2D2 } from "./R2D2ServerInterface";
 
 
 
@@ -27,5 +28,9 @@ export class R2D2Model {
 
   public load(r2d2File: string): Promise<string> {
     return this.connection.sendRequest("r2d2/load", { str: r2d2File });
+  }
+
+  public trace(loc: R2D2.FileLineCol, dir: R2D2.TraceDirection) {
+    return this.connection.sendRequest("r2d2/trace", { source: loc, traceDirection: dir, maxDepth: 1 })
   }
 }

@@ -1,6 +1,6 @@
 
 
-export namespace R2D2ServerInterface {
+export namespace R2D2 {
   export interface FileLineCol {
     filename: string;
     line: number;
